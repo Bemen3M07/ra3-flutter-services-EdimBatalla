@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hello_world/core/service/joke_http_servide.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_hello_world/core/provider/car_provider.dart';
+import 'package:flutter_hello_world/core/service/car_http_service.dart';
+import 'package:flutter_hello_world/core/provider/joke_provider.dart';
+import 'package:flutter_hello_world/ui/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CarProvider(CarHttpService())),
+        ChangeNotifierProvider(create: (_) => JokeProvider(JokeHttpService())),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -10,32 +24,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hello World',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Hello World'),
-      ),
-      body: const Center(
-        child: Text(
-          'Hello World!',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      title: 'Services App',
+      theme: ThemeData(useMaterial3: true),
+      home: const HomePage(),
     );
   }
 }

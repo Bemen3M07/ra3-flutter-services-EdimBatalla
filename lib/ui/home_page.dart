@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hello_world/ui/car_list_page.dart';
 import 'package:flutter_hello_world/ui/joke_page.dart';
+import 'package:flutter_hello_world/ui/tmb_home_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -32,6 +33,17 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (_) => const JokePage()),
                 ),
                 child: const Text('Acudits (Exercici 3)'),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const TmbHomePage()),
+                ),
+                child: const Text('TMB (Exercici 4)'),
               ),
             ),
           ],

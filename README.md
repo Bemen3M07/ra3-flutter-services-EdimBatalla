@@ -1,153 +1,85 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/urLBeyZM)
-# flutter-empty-2026
+# EXERCICI RA3 – CONSUM DE SERVEIS
+==================================================
 
-Plantilla de flux de treball per recrear una estructura neta de projecte Flutter només amb:
+## OBJECTIU
+--------------------------------------------------
 
-- Plataforma Web
-- Plataforma Android
+L’objectiu d’aquest exercici és integrar diferents APIs externes dins d’una aplicació Flutter per practicar el consum de serveis HTTP.
 
-Aquest README està pensat perquè puguis reiniciar el repositori a un estat mínim i regenerar els fitxers de plataforma necessaris de manera reproduïble.
+S’han implementat tres casos d’ús diferents:
 
-Aquest document s'ha fet amb l'ajuda de Copilot
+- Consulta d’acudits  
+- Consulta de dades de cotxes  
+- Consulta de transport públic (TMB)  
 
-## 1) Prerequisits
+---
 
-- Flutter SDK instal·lat i disponible al PATH
-- Comprova la instal·lació de Flutter:
+## APIS UTILITZADES
+--------------------------------------------------
 
-```bash
-flutter doctor
-```
+Durant el desenvolupament s’han utilitzat diverses APIs:
 
-## 2) Comença des d’un estat net del repositori
+- API d’acudits → retorna acudits aleatoris  
+- API de cotxes → proporciona informació sobre marques i models  
+- API de TMB → permet consultar línies, parades i temps de pas  
 
-Si vols descartar els canvis locals i tornar a l’últim estat confirmat al repositori:
+En tots els casos s’ha treballat amb peticions HTTP i parseig de respostes JSON.
 
-```bash
-git reset --hard
-git clean -fd
-```
+---
 
-## 3) Genera només l’estructura de plataforma Web + Android
+## ESTRUCTURA DE L’APLICACIÓ
+--------------------------------------------------
 
-Des de l’arrel del projecte:
+L’aplicació s’ha organitzat seguint una estructura clara:
 
-```bash
-flutter create --platforms=web,android .
-```
+**Service**  
+S’encarrega de fer les crides a les APIs.
 
-Què fa aquesta comanda:
+**Provider**  
+Gestiona l’estat i comunica les dades a la interfície.
 
-- Regenera els fitxers d’esquelet de Flutter que faltin
-- Crea/actualitza les carpetes de plataforma `web/` i `android/`
-- Manté el codi Dart existent de l’app sempre que sigui possible
+**Models**  
+Representen les dades rebudes de cada API.
 
-Opcions disponibles per `--platforms`:
+**UI**  
+Mostra la informació a l’usuari mitjançant diferents pantalles.
 
-- `android`
-- `ios`
-- `web`
-- `windows`
-- `macos`
-- `linux`
+---
 
-Exemple amb totes les plataformes:
+## FUNCIONALITATS IMPLEMENTADES
+--------------------------------------------------
 
-```bash
-flutter create --platforms=android,ios,web,windows,macos,linux .
-```
+### Acudits
+Permet obtenir i mostrar acudits de manera aleatòria.
 
-Pots combinar només les que necessitis, separades per comes.
+### Cotxes
+Permet consultar informació relacionada amb vehicles, com marques i models.
 
-## 4) Comandes de compilació
+### TMB
+Permet:
 
-Compila només l’app web:
+- Llistar línies de bus  
+- Visualitzar les parades d’una línia  
+- Consultar els temps de pas en una parada  
 
-```bash
-flutter build web
-```
+Flux de navegació:
+Línies → Parades → Temps de pas
 
-Compila l’APK d’Android:
 
-```bash
-flutter build apk
-```
+---
 
-Android App Bundle opcional (Play Store):
+## DIFICULTATS TROBADES
+--------------------------------------------------
 
-```bash
-flutter build appbundle
-```
+Algunes APIs no tenen una estructura uniforme en les respostes JSON, fet que ha obligat a adaptar el parseig de dades.
 
-## 5) Comandes d’execució (segons dispositiu)
+També s’ha detectat que en el cas de TMB no sempre hi ha dades disponibles en temps real per totes les parades.
 
-Fes `flutter run -d <dispositiu>` per executar l’aplicació en un dispositiu concret.
+---
 
-Opcionalment, pots afegir `&` al final de la comanda per executar-la en segon pla.
+## RESULTAT FINAL
+--------------------------------------------------
 
-- `-d` és el mateix que `--device-id`.
-- `&` executa la comanda en segon pla (el `run` bloqueja la terminal si no l’afegeixes).
-- Serveix per indicar a Flutter en quin dispositiu/target vols executar l’app.
-- Exemples: `chrome`, `android`, `ios`, `windows`, `macos`, `linux` (segons les plataformes que tinguis disponibles al teu entorn).
+S’ha aconseguit una aplicació funcional que integra múltiples serveis externs i permet visualitzar informació en temps real.
 
-### Chrome
-
-Executa al navegador Chrome:
-
-```bash
-flutter run -d chrome
-```
-
-L’opció `chrome` es pot executar directament per desenvolupament i proves.
-Si vols desplegar la versió web en un servidor, has de generar el build amb `flutter build web` i publicar el contingut de `build/web`.
-
-### Android
-
-Arrenca un emulador Android per línia de comandes (CLI):
-
-```bash
-flutter emulators # Per veure tots els emuladors disponibles
-flutter emulators --launch <emulator_id>
-flutter devices # Per veure tots els dispositius iniciats
-flutter run -d <device_id>
-```
-
-Exemple:
-
-```bash
-flutter emulators --launch Pixel_6_API_34
-flutter run -d emulator-5554
-```
-
-## 6) Comportament esperat de Git
-
-- Hauries de veure fitxers de codi/configuració dins de `web/` i `android/` versionats a Git.
-- No hauries de pujar sortides de compilació generades dins de `build/`.
-- No hauries de pujar fitxers locals d’IDE (`.idea/`, `.vscode/`, `*.iml`).
-
-Si cal, mantén aquestes regles a `.gitignore`:
-
-```gitignore
-build/
-.idea/
-.vscode/
-*.iml
-```
-
-Nota:
-
-- No ignoris tota la carpeta `web/` si web és una plataforma suportada.
-- No ignoris tota la carpeta `android/` si Android és una plataforma suportada.
-
-## 7) Checklist ràpid de verificació
-
-Després de regenerar, comprova:
-
-```bash
-flutter analyze
-flutter test
-flutter build web
-flutter build apk
-```
-
-Si totes les comandes passen, el teu flux de plantilla neta és correcte.
+El projecte està estructurat de forma modular i es pot ampliar fàcilment amb noves funcionalitats.
